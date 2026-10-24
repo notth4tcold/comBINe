@@ -1,0 +1,33 @@
+[package]
+name = "combine"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Ferramenta de imagens de CD (BIN/CUE) inspirada no CDmage"
+license = "MIT"
+repository = "https://github.com/notth4tcold/comBINe"
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+eframe = "0.33.3"
+egui_extras = "0.33"
+rayon = "1.12.0"
+rfd = "0.17.2"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+
+[package.metadata.deb]
+name = "combine"
+maintainer = "Mei <notth4tcold@gmail.com>"
+extended-description = "Ferramenta de imagens de CD (BIN/CUE, CCD, ISO) inspirada no CDmage: junta e separa trilhas, verifica e reconstrói EDC/ECC, navega e extrai arquivos ISO9660/XA."
+section = "utils"
+depends = "$auto, libxkbcommon0, libwayland-client0, libgl1, xdg-desktop-portal"
+assets = [
+    ["target/release/combine", "usr/bin/", "755"],
+    ["packaging/combine.desktop", "usr/share/applications/", "644"],
+    ["packaging/combine.svg", "usr/share/icons/hicolor/scalable/apps/", "644"],
+]

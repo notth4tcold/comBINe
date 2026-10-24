@@ -1,0 +1,4 @@
+/target
+/packaging/src
+/packaging/pkg
+*.pkg.tar.zst

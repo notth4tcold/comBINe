@@ -1,0 +1,43 @@
+# Maintainer: Mei <notth4tcold@gmail.com>
+# Build from the repository checkout: cd packaging && makepkg -si
+pkgname=combine
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Ferramenta de imagens de CD (BIN/CUE, CCD, ISO) inspirada no CDmage"
+url="https://github.com/notth4tcold/comBINe"
+arch=('x86_64' 'aarch64')
+license=('MIT')
+depends=('gcc-libs' 'glibc' 'libxkbcommon' 'wayland' 'libglvnd' 'xdg-desktop-portal')
+optdepends=('xdg-desktop-portal-gtk: janelas de abrir/salvar arquivos'
+            'xdg-desktop-portal-kde: janelas de abrir/salvar arquivos (KDE)')
+makedepends=('cargo')
+source=()
+options=('!lto' '!debug')
+
+_root() { realpath "$startdir/.."; }
+
+prepare() {
+  cd "$(_root)"
+  export RUSTUP_TOOLCHAIN=stable
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "$(_root)"
+  export RUSTUP_TOOLCHAIN=stable CARGO_TARGET_DIR="$srcdir/target"
+  cargo build --frozen --release
+}
+
+check() {
+  cd "$(_root)"
+  export RUSTUP_TOOLCHAIN=stable CARGO_TARGET_DIR="$srcdir/target"
+  cargo test --frozen --release
+}
+
+package() {
+  cd "$(_root)"
+  install -Dm755 "$srcdir/target/release/combine" "$pkgdir/usr/bin/combine"
+  install -Dm644 packaging/combine.desktop "$pkgdir/usr/share/applications/combine.desktop"
+  install -Dm644 packaging/combine.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/combine.svg"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

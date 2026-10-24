@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=comBINe
+GenericName=Ferramenta de imagens de CD
+Comment=Juntar, separar, verificar e extrair imagens BIN/CUE (estilo CDmage)
+Exec=combine %f
+Icon=combine
+Terminal=false
+Categories=Utility;Archiving;DiscBurning;
+MimeType=application/x-cue;application/x-cd-image;application/x-iso9660-image;application/x-raw-disk-image;
+Keywords=cue;bin;iso;ps1;psx;playstation;cdmage;psio;
+StartupWMClass=combine
