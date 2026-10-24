@@ -12,7 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: cargo test --release --locked
 
   ubuntu:
@@ -20,7 +20,7 @@ jobs:
     # Oldest supported runner, so the binary runs on Ubuntu 22.04 and newer.
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: cargo install cargo-deb --locked
       - run: cargo deb
       - name: Collect
@@ -39,8 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux:base-devel
     steps:
-      - run: pacman -Syu --noconfirm --needed rust git
-      - uses: actions/checkout@v4
+      - run: pacman -Syu --noconfirm --needed rust git libxkbcommon wayland libglvnd xdg-desktop-portal
+      - uses: actions/checkout@v5
       - name: makepkg
         run: |
           useradd -m builder
